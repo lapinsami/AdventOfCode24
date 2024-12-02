@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine(Day1Part2());
+        Console.WriteLine(Day2());
     }
 
     static int Day1()
@@ -58,5 +58,47 @@ class Program
         }
 
         return similarityScore;
+    }
+
+    static int Day2()
+    {
+        string[] input = File.ReadAllLines("../../../Day2Input.txt");
+        int numberOfSafeLines = 0;
+        
+        foreach (string line in input)
+        {
+            string[] dataAsStr = line.Split();
+            int[] data = new int[dataAsStr.Length];
+            
+            for (int i = 0; i < data.Length; i++)
+            {
+                data[i] = int.Parse(dataAsStr[i]);
+            }
+
+            bool safe = true;
+            int firstDiff = data[1] - data[0];
+            
+            for (int i = 1; i < data.Length; i++)
+            {
+                int diff = data[i] - data[i - 1];
+
+                if (Math.Abs(diff) > 3)
+                {
+                    safe = false;
+                }
+                
+                if (firstDiff * diff <= 0)
+                {
+                    safe = false;
+                }
+            }
+            
+            if (safe)
+            {
+                numberOfSafeLines++;
+            }
+        }
+        
+        return numberOfSafeLines;
     }
 }
