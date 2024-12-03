@@ -259,11 +259,11 @@ class Program
         {
             string inst = matchedInstructions[i].Value;
 
-            if (inst.StartsWith("do("))
+            if (inst.StartsWith("do()"))
             {
                 instructionsEnabled = true;
             }
-            else if (inst.StartsWith("don't("))
+            else if (inst.StartsWith("don't()"))
             {
                 instructionsEnabled = false;
             }
