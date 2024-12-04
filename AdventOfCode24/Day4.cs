@@ -56,7 +56,7 @@ public class Day4
                     break;
                 }
 
-                if (i == 3)
+                if (i == wordToFind.Length - 1)
                 {
                     return 1;
                 }
@@ -68,30 +68,21 @@ public class Day4
         static int FindWords(string word, string[] grid, int startingRow, int startingColumn)
         {
             int wordsFound = 0;
-            int currentRow = startingRow;
-            int currentColumn = startingColumn;
             
             // horizontal to the right
             wordsFound += CheckForWordInDirection(startingColumn, startingRow, 0, 1, word, grid);
-            
             // horizontal to the left
             wordsFound += CheckForWordInDirection(startingColumn, startingRow, 0, -1, word, grid);
-            
             // vertical down
             wordsFound += CheckForWordInDirection(startingColumn, startingRow, 1, 0, word, grid);
-            
             // vertical up
             wordsFound += CheckForWordInDirection(startingColumn, startingRow, -1, 0, word, grid);
-            
             // diagonal up right
             wordsFound += CheckForWordInDirection(startingColumn, startingRow, -1, 1, word, grid);
-            
             // diagonal up left
             wordsFound += CheckForWordInDirection(startingColumn, startingRow, -1, -1, word, grid);
-            
             // diagonal down right
             wordsFound += CheckForWordInDirection(startingColumn, startingRow, 1, 1, word, grid);
-            
             // diagonal down left
             wordsFound += CheckForWordInDirection(startingColumn, startingRow, +1, -1, word, grid);
             
