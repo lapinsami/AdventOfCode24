@@ -84,7 +84,7 @@ public class Day4
             // diagonal down right
             wordsFound += CheckForWordInDirection(startingColumn, startingRow, 1, 1, word, grid);
             // diagonal down left
-            wordsFound += CheckForWordInDirection(startingColumn, startingRow, +1, -1, word, grid);
+            wordsFound += CheckForWordInDirection(startingColumn, startingRow, 1, -1, word, grid);
             
             return wordsFound;
         }
