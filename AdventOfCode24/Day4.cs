@@ -235,4 +235,144 @@ public class Day4
             return wordsFound;
         }
     }
+    
+        public static int Part2()
+    {
+        int totalWordsFound = 0;
+        string[] input = File.ReadAllLines("../../../Day4Input.txt");
+        string wordToFind = "A";
+
+        for (int row = 0; row < input.Length; row++)
+        {
+            for (int column = 0; column < input[0].Length; column++)
+            {
+                if (input[row][column] == wordToFind[0])
+                {
+                    totalWordsFound += FindWords(input, row, column);
+                }
+            }
+        }
+        
+        return totalWordsFound;
+
+        static bool OutOfBounds(int row, int column, string[] grid)
+        {
+            if (row < 0 || row >= grid.Length)
+            {
+                return true;
+            }
+
+            if (column < 0 || column >= grid[0].Length)
+            {
+                return true;
+            }
+            
+            return false;
+        }
+
+        static int FindWords(string[] grid, int startingRow, int startingColumn)
+        {
+            int currentRow = startingRow;
+            int currentColumn = startingColumn;
+            
+            // diagonal up right
+            
+            currentColumn++;
+            currentRow--;
+
+            if (OutOfBounds(currentRow, currentColumn, grid))
+            {
+                return 0;
+            }
+
+            if (grid[currentRow][currentColumn] != 'M' && grid[currentRow][currentColumn] != 'S')
+            {
+                return 0;
+            }
+            
+            char firstFoundLetter = grid[currentRow][currentColumn];
+            
+            currentRow = startingRow;
+            currentColumn = startingColumn;
+            
+            // diagonal down left
+            
+            currentColumn--;
+            currentRow++;
+
+            if (OutOfBounds(currentRow, currentColumn, grid))
+            {
+                return 0;
+            }
+
+            if (grid[currentRow][currentColumn] != 'M' && grid[currentRow][currentColumn] != 'S')
+            {
+                return 0;
+            }
+            
+            char secondFoundLetter = grid[currentRow][currentColumn];
+
+            if (firstFoundLetter == secondFoundLetter)
+            {
+                return 0;
+            }
+
+            bool firstFound = true;
+            
+            currentRow = startingRow;
+            currentColumn = startingColumn;
+            
+            // diagonal up left
+            
+            currentColumn--;
+            currentRow--;
+
+            if (OutOfBounds(currentRow, currentColumn, grid))
+            {
+                return 0;
+            }
+
+            if (grid[currentRow][currentColumn] != 'M' && grid[currentRow][currentColumn] != 'S')
+            {
+                return 0;
+            }
+            
+            char thirdFoundLetter = grid[currentRow][currentColumn];
+            
+            currentRow = startingRow;
+            currentColumn = startingColumn;
+            
+            // diagonal down right
+            
+            currentColumn++;
+            currentRow++;
+
+            if (OutOfBounds(currentRow, currentColumn, grid))
+            {
+                return 0;
+            }
+
+            if (grid[currentRow][currentColumn] != 'M' && grid[currentRow][currentColumn] != 'S')
+            {
+                return 0;
+            }
+            
+            char fourthFoundLetter = grid[currentRow][currentColumn];
+
+            if (thirdFoundLetter == fourthFoundLetter)
+            {
+                return 0;
+            }
+
+            bool secondFound = true;
+
+            if (firstFound && secondFound)
+            {
+                return 1;
+            }
+
+
+            return 0;
+        }
+    }
 }
