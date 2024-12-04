@@ -36,6 +36,35 @@ public class Day4
             return false;
         }
 
+        static int CheckForWordInDirection(int col, int row, int rowDirection, int colDirection, string wordToFind, string[] letterGrid)
+        {
+            int currentColumn = col;
+            int currentRow = row;
+
+            for (int i = 1; i < wordToFind.Length; i++)
+            {
+                currentColumn += colDirection;
+                currentRow += rowDirection;
+
+                if (OutOfBounds(currentRow, currentColumn, letterGrid))
+                {
+                    break;
+                }
+
+                if (letterGrid[currentRow][currentColumn] != wordToFind[i])
+                {
+                    break;
+                }
+
+                if (i == 3)
+                {
+                    return 1;
+                }
+            }
+
+            return 0;
+        }
+
         static int FindWords(string word, string[] grid, int startingRow, int startingColumn)
         {
             int wordsFound = 0;
@@ -43,200 +72,34 @@ public class Day4
             int currentColumn = startingColumn;
             
             // horizontal to the right
-            for (int i = 1; i < word.Length; i++)
-            {
-                currentColumn++;
-
-                if (OutOfBounds(currentRow, currentColumn, grid))
-                {
-                    break;
-                }
-
-                if (grid[currentRow][currentColumn] != word[i])
-                {
-                    break;
-                }
-
-                if (i == 3)
-                {
-                    wordsFound++;
-                }
-            }
-
-            currentColumn = startingColumn;
+            wordsFound += CheckForWordInDirection(startingColumn, startingRow, 0, 1, word, grid);
             
             // horizontal to the left
-            for (int i = 1; i < word.Length; i++)
-            {
-                currentColumn--;
-
-                if (OutOfBounds(currentRow, currentColumn, grid))
-                {
-                    break;
-                }
-
-                if (grid[currentRow][currentColumn] != word[i])
-                {
-                    break;
-                }
-
-                if (i == 3)
-                {
-                    wordsFound++;
-                    break;
-                }
-            }
-            
-            currentColumn = startingColumn;
+            wordsFound += CheckForWordInDirection(startingColumn, startingRow, 0, -1, word, grid);
             
             // vertical down
-            for (int i = 1; i < word.Length; i++)
-            {
-                currentRow++;
-
-                if (OutOfBounds(currentRow, currentColumn, grid))
-                {
-                    break;
-                }
-
-                if (grid[currentRow][currentColumn] != word[i])
-                {
-                    break;
-                }
-
-                if (i == 3)
-                {
-                    wordsFound++;
-                }
-            }
-
-            currentRow = startingRow;
+            wordsFound += CheckForWordInDirection(startingColumn, startingRow, 1, 0, word, grid);
             
             // vertical up
-            for (int i = 1; i < word.Length; i++)
-            {
-                currentRow--;
-
-                if (OutOfBounds(currentRow, currentColumn, grid))
-                {
-                    break;
-                }
-
-                if (grid[currentRow][currentColumn] != word[i])
-                {
-                    break;
-                }
-
-                if (i == 3)
-                {
-                    wordsFound++;
-                }
-            }
-
-            currentRow = startingRow;
+            wordsFound += CheckForWordInDirection(startingColumn, startingRow, -1, 0, word, grid);
             
             // diagonal up right
-            for (int i = 1; i < word.Length; i++)
-            {
-                currentColumn++;
-                currentRow--;
-
-                if (OutOfBounds(currentRow, currentColumn, grid))
-                {
-                    break;
-                }
-
-                if (grid[currentRow][currentColumn] != word[i])
-                {
-                    break;
-                }
-
-                if (i == 3)
-                {
-                    wordsFound++;
-                }
-            }
-
-            currentColumn = startingColumn;
-            currentRow = startingRow;
+            wordsFound += CheckForWordInDirection(startingColumn, startingRow, -1, 1, word, grid);
             
             // diagonal up left
-            for (int i = 1; i < word.Length; i++)
-            {
-                currentColumn--;
-                currentRow--;
-
-                if (OutOfBounds(currentRow, currentColumn, grid))
-                {
-                    break;
-                }
-
-                if (grid[currentRow][currentColumn] != word[i])
-                {
-                    break;
-                }
-
-                if (i == 3)
-                {
-                    wordsFound++;
-                }
-            }
-
-            currentColumn = startingColumn;
-            currentRow = startingRow;
+            wordsFound += CheckForWordInDirection(startingColumn, startingRow, -1, -1, word, grid);
             
             // diagonal down right
-            for (int i = 1; i < word.Length; i++)
-            {
-                currentColumn++;
-                currentRow++;
-
-                if (OutOfBounds(currentRow, currentColumn, grid))
-                {
-                    break;
-                }
-
-                if (grid[currentRow][currentColumn] != word[i])
-                {
-                    break;
-                }
-
-                if (i == 3)
-                {
-                    wordsFound++;
-                }
-            }
-
-            currentColumn = startingColumn;
-            currentRow = startingRow;
+            wordsFound += CheckForWordInDirection(startingColumn, startingRow, 1, 1, word, grid);
             
             // diagonal down left
-            for (int i = 1; i < word.Length; i++)
-            {
-                currentColumn--;
-                currentRow++;
-
-                if (OutOfBounds(currentRow, currentColumn, grid))
-                {
-                    break;
-                }
-
-                if (grid[currentRow][currentColumn] != word[i])
-                {
-                    break;
-                }
-
-                if (i == 3)
-                {
-                    wordsFound++;
-                }
-            }
+            wordsFound += CheckForWordInDirection(startingColumn, startingRow, +1, -1, word, grid);
             
             return wordsFound;
         }
     }
     
-        public static int Part2()
+    public static int Part2()
     {
         int totalWordsFound = 0;
         string[] input = File.ReadAllLines("../../../Day4Input.txt");
